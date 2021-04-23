@@ -80,6 +80,7 @@ $head = <<<EOF
 				tabcontent[i].style.display = "none";
 			}
 			document.getElementById(tabName).style.display = "block";
+			document.title = 'Tabs: ' + tabName;
 		}
 		function refreshTab(tabName) {
 			document.getElementById(tabName).contentWindow.location.reload();
@@ -129,7 +130,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST["username"]) && !empty
 		echo "\t\t<div id=\"tablist\">\n";
 
 		foreach ($tabs as $image => $link) {
-			echo "\t\t\t<input type=\"image\" src=\"img/{$image}\" onclick=\"openTab('{$image}')\" ondblclick=\"refreshTab('{$image}')\" />\n";
+			$name = ucfirst(pathinfo($image, PATHINFO_FILENAME));
+			echo "\t\t\t<input type=\"image\" src=\"img/{$image}\" onclick=\"openTab('{$name}')\" ondblclick=\"refreshTab('{$name}')\" />\n";
 		}
 		echo "\t\t\t<input type=\"image\" src=\"img/logout.png\" onclick=\"window.location = 'index.php?logout';\" />\n";
 
@@ -137,7 +139,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST["username"]) && !empty
 		echo "\t\t</div>\n\t\t<div id=\"content\">\n";
 
 		foreach ($tabs as $image => $link) {
-			echo "\t\t\t<iframe src=\"{$link}\" height=\"100%\" width=\"100%\" id=\"{$image}\"></iframe>\n";
+			$name = ucfirst(pathinfo($image, PATHINFO_FILENAME));
+			echo "\t\t\t<iframe src=\"{$link}\" height=\"100%\" width=\"100%\" id=\"{$name}\"></iframe>\n";
 		}
 
 		echo "\t\t</div>\n";
