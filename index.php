@@ -92,7 +92,7 @@ EOF;
 $login_form = <<<EOF
 		<form id="login" method="post">
 			<input id="username" placeholder="Username" name="username" type="text" required><br />
-			<input id="password" placeholder="Password" name="password" type="password" required><br />                   
+			<input id="password" placeholder="Password" name="password" type="password" required><br />
 			<input type="submit" value="Login">
 		</form>
 EOF;
@@ -151,4 +151,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST["username"]) && !empty
 	echo "\t</body>\n</html>";
 
 }
+// vim: set ts=4 sw=4 tw=0 noet :
 ?>
