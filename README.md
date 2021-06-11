@@ -5,8 +5,8 @@ Loosely influenced by the [Organizr project](https://github.com/causefx/Organizr
 ```php
 // 'username' => 'password_hash',
 $users = array (
-	'admin' => '$2y$10$BMmHXABrS9H0aEvzCOcPjuZRX21ZMw59XQtuZ3f7KiUSmGQGDVhWO',
-	'otheruser' => '$2y$10$U65oi9E672fHHaE9ddFUM.MfhOG/8e2eR2H1ZGppLyZROj2gEvXu2',
+    'admin' => '$2y$10$BMmHXABrS9H0aEvzCOcPjuZRX21ZMw59XQtuZ3f7KiUSmGQGDVhWO',
+    'otheruser' => '$2y$10$U65oi9E672fHHaE9ddFUM.MfhOG/8e2eR2H1ZGppLyZROj2gEvXu2',
 
 );
 
@@ -14,11 +14,11 @@ $users = array (
 //
 // 'image.png' => '/link',
 $tabs = array(
-	'plex.png' => '/plex/',
-	'tautulli.png' => '/tautulli/',
-	'couchpotato.png' => '/couchpotato/',
-	'medusa.png' => '/medusa/',
-	'rutorrent.png' => '/rutorrent/',
+    'plex.png' => '/plex/',
+    'tautulli.png' => '/tautulli/',
+    'couchpotato.png' => '/couchpotato/',
+    'medusa.png' => '/medusa/',
+    'rutorrent.png' => '/rutorrent/',
 );
 ```
 There are not different user roles, all users have the same privileges.
