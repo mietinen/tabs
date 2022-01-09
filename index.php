@@ -14,11 +14,16 @@ $users = array (
 //
 // 'image.png' => '/link',
 $tabs = array(
-    'plex.png' => '/plex/',
-    'tautulli.png' => '/tautulli/',
-    'couchpotato.png' => '/couchpotato/',
-    'medusa.png' => '/medusa/',
-    'rutorrent.png' => '/rutorrent/',
+	'plex.png'	=> '/plex/',
+	'tautulli.png'	=> '/tautulli/',
+	// 'couchpotato.png' => '/couchpotato/',
+	// 'medusa.png' => '/medusa/',
+	// 'rutorrent.png' => '/rutorrent/',
+	'radarr.png'	=> '/radarr/',
+	'sonarr.png'	=> '/sonarr/',
+	'jackett.png'	=> '/jackett/',
+	'bazarr.png'	=> '/bazarr/',
+	'deluge.png'	=> '/deluge/',
 );
 
 
@@ -107,7 +112,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST["username"]) && !empty
 
         }
     }
-    echo "Auth failed.\n";
+    if (empty($_SESSION["authenticated"]) || $_SESSION["authenticated"] != TRUE) {
+        header('HTTP/1.0 401 Unauthorized');
+        echo "Auth failed.\n";
+    }
 
 } elseif ($_SERVER['QUERY_STRING'] == "logout") {
     // Logout
