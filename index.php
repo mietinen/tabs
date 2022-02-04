@@ -1,37 +1,25 @@
 <?php
-
-// online generator: phppasswordhash.com
-// examble password hash from shell:
-// [me@local ~]$ php -r 'echo password_hash("password", PASSWORD_DEFAULT);'
-//
-// 'username' => 'password_hash',
-$users = array (
-    'admin' => '$2y$10$BMmHXABrS9H0aEvzCOcPjuZRX21ZMw59XQtuZ3f7KiUSmGQGDVhWO',
-
-);
+// For authentication, use nginx auth_basic
 
 // Can be local path or an full url
 //
 // 'image.png' => '/link',
 $tabs = array(
-	'plex.png'	=> '/plex/',
-	'tautulli.png'	=> '/tautulli/',
-	// 'couchpotato.png' => '/couchpotato/',
-	// 'medusa.png' => '/medusa/',
-	// 'rutorrent.png' => '/rutorrent/',
-	'radarr.png'	=> '/radarr/',
-	'sonarr.png'	=> '/sonarr/',
-	'jackett.png'	=> '/jackett/',
-	'bazarr.png'	=> '/bazarr/',
-	'deluge.png'	=> '/deluge/',
+    'plex.png'      => '/plex/',
+    'tautulli.png'  => '/tautulli/',
+    // 'couchpotato.png' => '/couchpotato/',
+    // 'medusa.png' => '/medusa/',
+    // 'rutorrent.png' => '/rutorrent/',
+    'radarr.png'    => '/radarr/',
+    'sonarr.png'    => '/sonarr/',
+    'jackett.png'   => '/jackett/',
+    'bazarr.png'    => '/bazarr/',
+    'deluge.png'    => '/deluge/',
 );
 
-
 // no edit from here
-
-session_start();
-
-$head = <<<EOF
+?>
+<html>
     <head>
         <title>Tabs</title>
         <style type="text/css">
@@ -92,72 +80,22 @@ $head = <<<EOF
         }
         </script>
     </head>
-EOF;
-
-$login_form = <<<EOF
-        <form id="login" method="post">
-            <input id="username" placeholder="Username" name="username" type="text" required><br />
-            <input id="password" placeholder="Password" name="password" type="password" required><br />
-            <input type="submit" value="Login">
-        </form>
-EOF;
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST["username"]) && !empty($_POST["password"])) {
-    // Authenticate
-    foreach($users as $username => $password_hash) {
-        if ($_POST["username"] === $username && password_verify($_POST["password"], $password_hash)) {
-            $_SESSION["authenticated"] = TRUE;
-            header('Location: index.php');
-            break;
-
-        }
-    }
-    if (empty($_SESSION["authenticated"]) || $_SESSION["authenticated"] != TRUE) {
-        header('HTTP/1.0 401 Unauthorized');
-        echo "Auth failed.\n";
-    }
-
-} elseif ($_SERVER['QUERY_STRING'] == "logout") {
-    // Logout
-    unset($_SESSION["authenticated"]);
-    header('Location: index.php');
-
-} else {
-
-    // open html, print head and open body
-    echo "<html>\n{$head}\n\t<body>\n";
-
-    if (empty($_SESSION["authenticated"]) || $_SESSION["authenticated"] != TRUE) {
-        // Not logged in
-        echo "{$login_form}\n";
-
-    } else {
-        // Logged in
-
-        // Tablist, plus logout
-        echo "\t\t<div id=\"tablist\">\n";
-
-        foreach ($tabs as $image => $link) {
-            $name = ucfirst(pathinfo($image, PATHINFO_FILENAME));
-            echo "\t\t\t<input type=\"image\" src=\"img/{$image}\" onclick=\"openTab('{$name}')\" ondblclick=\"refreshTab('{$name}')\" />\n";
-        }
-        echo "\t\t\t<input type=\"image\" src=\"img/logout.png\" onclick=\"window.location = 'index.php?logout';\" />\n";
-
-        // Content
-        echo "\t\t</div>\n\t\t<div id=\"content\">\n";
-
-        foreach ($tabs as $image => $link) {
-            $name = ucfirst(pathinfo($image, PATHINFO_FILENAME));
-            echo "\t\t\t<iframe src=\"{$link}\" height=\"100%\" width=\"100%\" id=\"{$name}\"></iframe>\n";
-        }
-
-        echo "\t\t</div>\n";
-
-    }
-
-    // Close body and html
-    echo "\t</body>\n</html>";
-
+    <body>
+        <div id="tablist">
+<?php
+foreach ($tabs as $image => $link) {
+    $name = ucfirst(pathinfo($image, PATHINFO_FILENAME));
+    echo "\t\t\t<input type=\"image\" src=\"img/{$image}\" onclick=\"openTab('{$name}')\" ondblclick=\"refreshTab('{$name}')\" />\n";
 }
-// vim: set ts=4 sw=4 tw=0 et :
 ?>
+        </div>
+        <div id="content">
+<?php
+foreach ($tabs as $image => $link) {
+    $name = ucfirst(pathinfo($image, PATHINFO_FILENAME));
+    echo "\t\t\t<iframe src=\"{$link}\" height=\"100%\" width=\"100%\" id=\"{$name}\"></iframe>\n";
+}
+?>
+        </div>
+    </body>
+</html>
